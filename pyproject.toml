@@ -1,0 +1,49 @@
+[project]
+name = "tzibal-ulew"
+version = "0.1.0"
+description = "App de escritorio para registrar salidas de campo y documentar especies"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi",
+    "uvicorn[standard]",
+    "sqlalchemy",
+    "alembic",
+    "pydantic[email]",
+    "PyQt6",
+    "PyQt6-WebEngine",
+    "folium",
+    "httpx",
+    "pillow",
+    "matplotlib",
+]
+
+[tool.setuptools.packages.find]
+include = ["api*", "ui*", "core*", "sync*", "tests*"]
+
+[project.optional-dependencies]
+dev = [
+    "mypy",
+    "ruff",
+    "pytest",
+    "pytest-qt",
+    "httpx",       
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.mypy]
+strict = true
+python_version = "3.11"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+select = ["E", "F", "I", "N", "W", "UP"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
