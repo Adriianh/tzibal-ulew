@@ -1,12 +1,13 @@
 """
 Centralized logging configuration for the application.
-This module sets up the logging format, level, and handlers to ensure consistent logging across different parts of the application.
+This module sets up the logging format, level, and handlers to ensure consistent logging
+across different parts of the application.
 """
 
 import logging
 import sys
 
-from config import LOG_LEVEL, LOG_FORMAT
+from config import LOG_FORMAT, LOG_LEVEL
 
 
 def setup_logging() -> None:

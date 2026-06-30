@@ -2,14 +2,21 @@
 Shared fixtures for pytest.
 """
 
-import pytest
+from collections.abc import Generator
 
+import pytest
 from fastapi.testclient import TestClient
 
 
 @pytest.fixture
-def client():
+def client() -> Generator[TestClient, None, None]:
     """
     HTTP client for testing FastAPI endpoints.
     """
-    pytest.skip("Skipping client fixture as the FastAPI app is not defined in this context.")
+    try:
+        from api.main import app  # type: ignore[import-not-found]
+    except ImportError:
+        pytest.skip("api.main not available yet — build the API first")
+
+    with TestClient(app) as _client:
+        yield _client
