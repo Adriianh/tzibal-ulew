@@ -14,7 +14,7 @@ def client() -> Generator[TestClient, None, None]:
     HTTP client for testing FastAPI endpoints.
     """
     try:
-        from api.main import app  # type: ignore[import-not-found]
+        from api.main import app
     except ImportError:
         pytest.skip("api.main not available yet — build the API first")
 

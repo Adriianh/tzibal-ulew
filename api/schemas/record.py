@@ -14,7 +14,7 @@ class RecordBase(BaseModel):
 
 
 class RecordCreate(RecordBase):
-    pass
+    trip_id: int
 
 
 class RecordResponse(RecordBase):
