@@ -5,7 +5,7 @@ Registers all routers and configures middleware.
 
 from fastapi import FastAPI
 
-from api.routers import map, records, species, stats, trips
+from api.routers import map, records, species, stats, system, trips
 
 app = FastAPI(
     title="Tz'ib'al Ulew API",
@@ -18,6 +18,7 @@ app.include_router(species.router)
 app.include_router(records.router)
 app.include_router(map.router)
 app.include_router(stats.router)
+app.include_router(system.router)
 
 
 @app.get("/health")
