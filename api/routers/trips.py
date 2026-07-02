@@ -3,10 +3,12 @@ Endpoints CRUD for trips (field expeditions).
 """
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 
 from api.dependencies import get_db
+from api.models.record import Record
 from api.models.trip import Trip
+from api.schemas.record import RecordWithSpeciesResponse
 from api.schemas.trip import TripCreate, TripResponse
 
 router = APIRouter(prefix="/trips", tags=["Trips"])
@@ -62,3 +64,31 @@ def delete_trip(trip_id: int, db: Session = Depends(get_db)) -> None:
 
     db.delete(trip)
     db.commit()
+
+
+@router.get("/{trip_id}/records", response_model=list[RecordWithSpeciesResponse])
+def get_trip_records(
+    trip_id: int, db: Session = Depends(get_db)
+) -> list[RecordWithSpeciesResponse]:
+    """Gets all records for a specific trip, including species info."""
+    trip = db.get(Trip, trip_id)
+    if not trip:
+        raise HTTPException(status_code=404, detail="Trip not found")
+
+    records = (
+        db.query(Record).options(joinedload(Record.species)).filter(Record.trip_id == trip_id).all()
+    )
+
+    return [
+        RecordWithSpeciesResponse(
+            id=r.id,
+            trip_id=r.trip_id,
+            species_id=r.species_id,
+            count=r.count,
+            notes=r.notes,
+            created_at=r.created_at,
+            common_name=r.species.common_name,
+            scientific_name=r.species.scientific_name,
+        )
+        for r in records
+    ]

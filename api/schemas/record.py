@@ -29,3 +29,10 @@ class RecordResponse(RecordBase):
 class RecordUpdate(BaseModel):
     count: int | None = Field(None, ge=1)
     notes: str | None = None
+
+
+class RecordWithSpeciesResponse(RecordResponse):
+    """Record response that includes species name information."""
+
+    common_name: str
+    scientific_name: str
