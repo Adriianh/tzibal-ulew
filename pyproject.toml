@@ -31,6 +31,10 @@ dev = [
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+filterwarnings = [
+    # Starlette deprecates httpx in favor of httpx2, but httpx2 doesn't exist yet
+    "ignore::starlette.exceptions.StarletteDeprecationWarning",
+]
 
 [tool.mypy]
 strict = true
