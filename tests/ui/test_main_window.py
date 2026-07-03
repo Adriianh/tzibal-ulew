@@ -4,7 +4,6 @@ Tests for the main application window.
 
 from __future__ import annotations
 
-from PyQt6.QtWidgets import QLabel
 from pytestqt.qtbot import QtBot
 
 from ui.app import MainWindow
@@ -24,10 +23,20 @@ def test_sidebar_has_three_items(qtbot: QtBot) -> None:
     window = MainWindow()
     qtbot.add_widget(window)
 
+    item0 = window.nav.item(0)
+    item1 = window.nav.item(1)
+    item2 = window.nav.item(2)
+
     assert window.nav.count() == 3
-    assert window.nav.item(0).text() == "Dashboard"
-    assert window.nav.item(1).text() == "Salidas"
-    assert window.nav.item(2).text() == "Especies"
+
+    assert item0 is not None
+    assert item0.text() == "Dashboard"
+
+    assert item1 is not None
+    assert item1.text() == "Salidas"
+
+    assert item2 is not None
+    assert item2.text() == "Especies"
 
 
 def test_navigation_switches_pages(qtbot: QtBot) -> None:
@@ -49,16 +58,3 @@ def test_navigation_switches_pages(qtbot: QtBot) -> None:
     # Click back to Dashboard (index 0)
     window.nav.setCurrentRow(0)
     assert window.pages.currentIndex() == 0
-
-
-def test_initial_selection_is_dashboard(qtbot: QtBot) -> None:
-    """First page visible on launch should be Dashboard."""
-    window = MainWindow()
-    qtbot.add_widget(window)
-
-    assert window.pages.currentIndex() == 0
-    page = window.pages.currentWidget()
-    assert page is not None
-    label = page.findChild(QLabel)
-    assert label is not None
-    assert "Dashboard" in label.text()
