@@ -34,9 +34,9 @@ def _create_species(client: TestClient, name: str = "Test Species") -> int:
         },
     )
 
-    trip_id = resp.json()["id"]
-    assert isinstance(trip_id, int), "Species ID should be an integer"
-    return trip_id
+    species_id = resp.json()["id"]
+    assert isinstance(species_id, int), "Species ID should be an integer"
+    return species_id
 
 
 def test_create_record(client: TestClient) -> None:
