@@ -16,6 +16,9 @@ from PyQt6.QtWidgets import (
     QWidget,
 )
 
+from ui.api_client import ApiClient
+from ui.views.dashboard_view import DashboardView
+
 
 class MainWindow(QMainWindow):
     """Main application window with sidebar navigation and content area."""
@@ -24,6 +27,8 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("Tz'ib'al Ulew — Registro de Expediciones")
         self.resize(1100, 700)
+
+        self.api_client = ApiClient("http://127.0.0.1:8000")
 
         self._setup_ui()
 
@@ -61,13 +66,18 @@ class MainWindow(QMainWindow):
         self.pages = QStackedWidget()
         self.pages.setObjectName("pages")
 
-        for title in ["Dashboard", "Salidas", "Especies"]:
-            page = QWidget()
-            page_layout = QVBoxLayout(page)
-            label = QLabel(f"{title} — en construcción")
-            label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-            page_layout.addWidget(label)
-            self.pages.addWidget(page)
+        dashboard = DashboardView(self.api_client)
+        self.pages.addWidget(dashboard)
+
+        trips_page = QWidget()
+        trips_layout = QVBoxLayout(trips_page)
+        trips_layout.addWidget(QLabel("Salidas — en construcción"))
+        self.pages.addWidget(trips_page)
+
+        species_page = QWidget()
+        species_layout = QVBoxLayout(species_page)
+        species_layout.addWidget(QLabel("Especies — en construcción"))
+        self.pages.addWidget(species_page)
 
         # ── Navigation connection ──────────────────────────────
         self.nav.currentRowChanged.connect(self.pages.setCurrentIndex)
