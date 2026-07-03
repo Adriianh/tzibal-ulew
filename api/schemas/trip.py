@@ -4,7 +4,7 @@ Pydantic schemas for Trip (field expeditions)
 
 from datetime import date, datetime
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class TripBase(BaseModel):
@@ -45,5 +45,4 @@ class TripResponse(TripBase):
     id: int
     created_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

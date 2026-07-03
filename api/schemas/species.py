@@ -2,7 +2,7 @@
 Pydantic schemas for Species catalog
 """
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class SpeciesBase(BaseModel):
@@ -32,5 +32,4 @@ class SpeciesCreate(SpeciesBase):
 class SpeciesResponse(SpeciesBase):
     id: int
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
