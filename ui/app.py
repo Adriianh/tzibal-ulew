@@ -18,6 +18,7 @@ from PyQt6.QtWidgets import (
 
 from ui.api_client import ApiClient
 from ui.views.dashboard_view import DashboardView
+from ui.views.species_view import SpeciesView
 
 
 class MainWindow(QMainWindow):
@@ -74,9 +75,7 @@ class MainWindow(QMainWindow):
         trips_layout.addWidget(QLabel("Salidas — en construcción"))
         self.pages.addWidget(trips_page)
 
-        species_page = QWidget()
-        species_layout = QVBoxLayout(species_page)
-        species_layout.addWidget(QLabel("Especies — en construcción"))
+        species_page = SpeciesView(self.api_client)
         self.pages.addWidget(species_page)
 
         # ── Navigation connection ──────────────────────────────
