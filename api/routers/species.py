@@ -12,7 +12,7 @@ from api.schemas.species import SpeciesCreate, SpeciesResponse
 router = APIRouter(prefix="/species", tags=["Species"])
 
 
-@router.get("/", response_model=list[SpeciesResponse])
+@router.get("", response_model=list[SpeciesResponse])
 def list_species(
     type: str | None = Query(None, description="Filter by type (Bird, Mammal, Plant, ...)"),
     db: Session = Depends(get_db),
@@ -33,7 +33,7 @@ def get_species(species_id: int, db: Session = Depends(get_db)) -> Species | Non
     return species
 
 
-@router.post("/", response_model=SpeciesResponse, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=SpeciesResponse, status_code=status.HTTP_201_CREATED)
 def create_species(species_data: SpeciesCreate, db: Session = Depends(get_db)) -> Species:
     """Creates a new species in the catalog."""
     species = Species(**species_data.model_dump())

@@ -14,7 +14,7 @@ from api.schemas.trip import TripCreate, TripResponse
 router = APIRouter(prefix="/trips", tags=["Trips"])
 
 
-@router.get("/", response_model=list[TripResponse])
+@router.get("", response_model=list[TripResponse])
 def list_trips(db: Session = Depends(get_db)) -> list[Trip]:
     """Lists all field trips ordered by date descending."""
     trips = db.query(Trip).order_by(Trip.trip_date.desc()).all()
@@ -30,7 +30,7 @@ def get_trip(trip_id: int, db: Session = Depends(get_db)) -> Trip | None:
     return trip
 
 
-@router.post("/", response_model=TripResponse, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=TripResponse, status_code=status.HTTP_201_CREATED)
 def create_trip(trip_data: TripCreate, db: Session = Depends(get_db)) -> Trip:
     """Create a new field trip."""
     trip = Trip(**trip_data.model_dump())

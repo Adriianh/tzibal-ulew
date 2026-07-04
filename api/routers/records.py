@@ -12,7 +12,7 @@ from api.schemas.record import RecordCreate, RecordResponse, RecordUpdate
 router = APIRouter(prefix="/records", tags=["Records"])
 
 
-@router.post("/", response_model=RecordResponse, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=RecordResponse, status_code=status.HTTP_201_CREATED)
 def create_record(record_data: RecordCreate, db: Session = Depends(get_db)) -> Record:
     """Adds a sighting record to a trip."""
 
