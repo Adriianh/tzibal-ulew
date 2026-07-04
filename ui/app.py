@@ -4,6 +4,8 @@ Main application window with sidebar navigation.
 
 from __future__ import annotations
 
+from pathlib import Path
+
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
     QFrame,
@@ -33,6 +35,7 @@ class MainWindow(QMainWindow):
         self.api_client = ApiClient("http://127.0.0.1:8000")
 
         self._setup_ui()
+        self._load_styles()
 
     def _setup_ui(self) -> None:
         central = QWidget()
@@ -83,3 +86,11 @@ class MainWindow(QMainWindow):
         # ── Assembling ─────────────────────────────────────────
         layout.addWidget(sidebar)
         layout.addWidget(self.pages, 1)
+
+    def _load_styles(self) -> None:
+        """Load the stylesheet from a file."""
+
+        qss_path = Path(__file__).resolve().parent.parent / "assets" / "styles.qss"
+        if qss_path.exists():
+            with open(qss_path) as f:
+                self.setStyleSheet(f.read())

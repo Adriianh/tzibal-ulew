@@ -40,6 +40,7 @@ class DashboardView(QWidget):
     def _create_card(self, title: str, value: str) -> tuple[QFrame, QLabel]:
         """Create a card widget with a title and value."""
         card = QFrame()
+        card.setObjectName("card")
         card.setFrameShape(QFrame.Shape.StyledPanel)
         card.setStyleSheet("""
             QFrame {
