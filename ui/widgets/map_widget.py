@@ -29,9 +29,12 @@ class MapWidget(QWidget):
 
     def refresh(self) -> None:
         """Fetch map data and regenerate the Folium HTML."""
-        points = self.api_client.map.get_map_points()
-        html = self._generate_map(points)
-        self.web_view.setHtml(html)
+        try:
+            points = self.api_client.map.get_map_points()
+            html = self._generate_map(points)
+            self.web_view.setHtml(html)
+        except Exception as e:
+            print(f"Error loading map: {e}")
 
     def _generate_map(self, points: list[dict[str, Any]]) -> str:
         """Build a Folium map HTML from API data."""

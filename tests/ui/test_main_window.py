@@ -26,8 +26,10 @@ def test_sidebar_has_three_items(qtbot: QtBot) -> None:
     item0 = window.nav.item(0)
     item1 = window.nav.item(1)
     item2 = window.nav.item(2)
+    item3 = window.nav.item(3)
+    item4 = window.nav.item(4)
 
-    assert window.nav.count() == 3
+    assert window.nav.count() == 5
 
     assert item0 is not None
     assert item0.text() == "Dashboard"
@@ -37,6 +39,12 @@ def test_sidebar_has_three_items(qtbot: QtBot) -> None:
 
     assert item2 is not None
     assert item2.text() == "Especies"
+
+    assert item3 is not None
+    assert item3.text() == "Mapa"
+
+    assert item4 is not None
+    assert item4.text() == "Estadísticas"
 
 
 def test_navigation_switches_pages(qtbot: QtBot) -> None:
