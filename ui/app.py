@@ -20,6 +20,7 @@ from PyQt6.QtWidgets import (
 
 from ui.api_client import ApiClient
 from ui.views.dashboard_view import DashboardView
+from ui.views.map_view import MapView
 from ui.views.species_view import SpeciesView
 from ui.views.trips_view import TripsView
 
@@ -60,7 +61,7 @@ class MainWindow(QMainWindow):
 
         self.nav = QListWidget()
         self.nav.setObjectName("nav")
-        self.nav.addItems(["Dashboard", "Salidas", "Especies"])
+        self.nav.addItems(["Dashboard", "Salidas", "Especies", "Mapa"])
         self.nav.setCurrentRow(0)
 
         sidebar_layout.addWidget(logo)
@@ -79,6 +80,9 @@ class MainWindow(QMainWindow):
 
         species_page = SpeciesView(self.api_client)
         self.pages.addWidget(species_page)
+
+        maps_page = MapView(self.api_client)
+        self.pages.addWidget(maps_page)
 
         # ── Navigation connection ──────────────────────────────
         self.nav.currentRowChanged.connect(self.pages.setCurrentIndex)
